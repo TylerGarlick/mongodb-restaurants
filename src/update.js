@@ -2,11 +2,11 @@ const Db = require('./mongo');
 
 module.exports = {
 
-  insert() {
+  update(query, document) {
     return Db.then(db => {
       const restaurants = db.collection('restaurants');
-
-      // TODO: Put insert here
+      return restaurants.findAndModify(query, [], { $set: document });
     });
   }
+
 };

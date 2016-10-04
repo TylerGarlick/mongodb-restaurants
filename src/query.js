@@ -1,3 +1,6 @@
+const MongoDB = require('mongodb');
+const ObjectID = MongoDB.ObjectID;
+
 const Db = require('./mongo');
 
 module.exports = {
@@ -12,10 +15,19 @@ module.exports = {
 
   findByName(name) {
     return Db.then(db => {
-      const query = {};
+      const query = { name: name };
       return db.collection('restaurants')
                .find(query)
                .toArray();
+    });
+  },
+
+  findById(id) {
+
+    return Db.then(db => {
+      const query = { _id: ObjectID(id) };
+      return db.collection('restaurants')
+               .findOne(query);
     });
   }
 
